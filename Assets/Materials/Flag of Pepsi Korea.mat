@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9090031429649665594
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 7
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Flag of Pepsi Korea
+  m_Shader: {fileID: -6465566751694194690, guid: 093ec7fa2f9c6b44ea8b7a0e5abada3a, type: 3}
+  m_Parent: {fileID: -876546973899608171, guid: 093ec7fa2f9c6b44ea8b7a0e5abada3a, type: 3}
+  m_ModifiedSerializedProperties: 2
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 07dd6f4459cc92948888d5eaef762d24, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Frequency1: 1.5
+    - _Frequency2: 4.6
+    - _Frequency3: 11
+    - _QueueControl: 0
+    - _Speed1: 1.8
+    - _Speed2: 5
+    - _Speed3: 7
+    m_Colors:
+    - _Movement1: {r: 0, g: 0.1, b: 0.16, a: 0}
+    - _Movement2: {r: 0, g: 0.07, b: 0.1, a: 0}
+    - _Movement3: {r: 0, g: 0.02, b: 0.05, a: 0}
+  m_BuildTextureStacks: []
