@@ -39,11 +39,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _Ambient_Strength: 1
-    - _Bump_Strength: 0
-    - _Metallic: 0.346
+    - _Bump_Strength: 0.008
+    - _Metallic: 0.288
     - _QueueControl: 0
-    - _Scale: 13
-    - _Smoothness: 0.176
+    - _Scale: 84.2
+    - _Smoothness: 0
     m_Colors:
     - _Color1: {r: 0.7169812, g: 0.7169812, b: 0.7169812, a: 1}
     - _Color2: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
