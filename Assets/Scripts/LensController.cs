@@ -21,6 +21,7 @@ namespace Visuals
 		{
 			_camera = Camera.main;
 			_material = _rendererFeature.passMaterial;
+			_material.hideFlags = HideFlags.DontSave;
 			_rendererFeature.SetActive(true);
 			Update();
 		}
