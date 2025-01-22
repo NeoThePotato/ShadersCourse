@@ -15,8 +15,6 @@ namespace Visuals
 		private float _size = 0.1f;
 		private float Size { get => _size; set => _size = Mathf.Clamp01(value); }
 
-		public Transform Target { get; set; }
-
 		private void OnEnable()
 		{
 			_camera = Camera.main;

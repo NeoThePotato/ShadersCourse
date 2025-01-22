@@ -1,5 +1,19 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5029493953744954881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0ec52cecc795714f93f274c2e71e87b, type: 3}
+  m_Name: Night Vision Post Processing
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  _baseProfile: {fileID: 11400000, guid: 61392792ddd16ae40b634aa5fc393777, type: 2}
 --- !u!114 &-4366281259716705636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,11 +64,11 @@ MonoBehaviour:
     debugReplacementPS: {fileID: 4800000, guid: cf852408f2e174538bcd9b7fda1c5ae7, type: 3}
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
+  - {fileID: -4366281259716705636}
   - {fileID: -1114110547848633439}
   - {fileID: 7833122117494664109}
-  - {fileID: -4366281259716705636}
-  - {fileID: 6624871923890944414}
-  m_RendererFeatureMap: a163f70a5ce289f0ad6b866f10d7b46c9c0224ed53da67c39e79fa29ea45f05b
+  - {fileID: -5029493953744954881}
+  m_RendererFeatureMap: 9c0224ed53da67c3a163f70a5ce289f0ad6b866f10d7b46cff990e7fe5a533ba
   m_UseNativeRenderPass: 1
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -93,26 +107,6 @@ MonoBehaviour:
   m_CopyDepthMode: 1
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 0
---- !u!114 &6624871923890944414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
-  m_Name: Nightvision Renderer
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  injectionPoint: 550
-  fetchColorBuffer: 1
-  requirements: 4
-  passMaterial: {fileID: -876546973899608171, guid: f8c30e3a30acc9b4c9b80e4adde9a564, type: 3}
-  passIndex: 0
-  bindDepthStencilAttachment: 0
-  m_Version: 1
 --- !u!114 &7833122117494664109
 MonoBehaviour:
   m_ObjectHideFlags: 0
