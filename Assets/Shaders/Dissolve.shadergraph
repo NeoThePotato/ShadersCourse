@@ -1417,10 +1417,10 @@
     "m_Guid": {
         "m_GuidSerialized": "21a4bb5a-c144-4a31-a074-f5c9237afca2"
     },
-    "m_Name": "Color",
+    "m_Name": "EmissionColor",
     "m_DefaultRefNameVersion": 1,
-    "m_RefNameGeneratedByDisplayName": "Color",
-    "m_DefaultReferenceName": "_Color",
+    "m_RefNameGeneratedByDisplayName": "EmissionColor",
+    "m_DefaultReferenceName": "_EmissionColor",
     "m_OverrideReferenceName": "",
     "m_GeneratePropertyBlock": true,
     "m_UseCustomSlotLabel": false,
@@ -2827,7 +2827,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "ebc48d035ca84ed79fc015c8d6a9a6e3",
     "m_Id": 0,
-    "m_DisplayName": "Color",
+    "m_DisplayName": "EmissionColor",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
