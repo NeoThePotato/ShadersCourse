@@ -139,7 +139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &57185263
 Transform:
   m_ObjectHideFlags: 0
@@ -148,12 +148,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57185262}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99144495, z: -0, w: -0.13052607}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.25, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1011191459}
+  m_Father: {fileID: 558933846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!73398921 &57185264
 VFXRenderer:
@@ -163,7 +163,7 @@ VFXRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57185262}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -414,6 +414,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 558933846}
+  - component: {fileID: 558933847}
   m_Layer: 0
   m_Name: Morph
   m_TagString: Untagged
@@ -435,10 +436,29 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1573620515}
+  - {fileID: 57185263}
   - {fileID: 1011191459}
   - {fileID: 1357180256}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &558933847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558933845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 319d4ff03afe13749ac5c84da11e5eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _start: {fileID: 1011191460}
+  _end: {fileID: 1357180257}
+  _vfx: {fileID: 57185265}
+  _dissolveMaterial: {fileID: 2100000, guid: 30918b7605d7d6d4ba3d575e72806f40, type: 2}
+  _originalShader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+  _animationDuration: 2
 --- !u!1 &573860911
 GameObject:
   m_ObjectHideFlags: 0
@@ -660,15 +680,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 348269851332267925, guid: d5f3767fec037ae449081225915022e1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 57185263}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5f3767fec037ae449081225915022e1, type: 3}
 --- !u!4 &1011191459 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 348269851332267925, guid: d5f3767fec037ae449081225915022e1, type: 3}
+  m_PrefabInstance: {fileID: 1011191458}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1011191460 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2116580323422757211, guid: d5f3767fec037ae449081225915022e1, type: 3}
   m_PrefabInstance: {fileID: 1011191458}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1068541260
@@ -683,6 +705,7 @@ GameObject:
   - component: {fileID: 1068541264}
   - component: {fileID: 1068541263}
   - component: {fileID: 1068541262}
+  - component: {fileID: 1068541265}
   m_Layer: 5
   m_Name: Morph
   m_TagString: Untagged
@@ -753,7 +776,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1068541263}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1068541265}
+        m_TargetAssemblyTypeName: MorphButton, Assembly-CSharp
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1068541263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -792,6 +827,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1068541260}
   m_CullTransparentMesh: 1
+--- !u!114 &1068541265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068541260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ff1d34b27cb664ab4e8c4ba3c82daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _button: {fileID: 1068541262}
+  _morphController: {fileID: 558933847}
 --- !u!1 &1300491711
 GameObject:
   m_ObjectHideFlags: 0
@@ -916,6 +965,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Engineer
       objectReference: {fileID: 0}
+    - target: {fileID: 2163606084426294751, guid: bba52cb8327573a4299109283d05b63e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -924,6 +977,11 @@ PrefabInstance:
 --- !u!4 &1357180256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1110506447530992391, guid: bba52cb8327573a4299109283d05b63e, type: 3}
+  m_PrefabInstance: {fileID: 1357180255}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1357180257 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2163606084426294751, guid: bba52cb8327573a4299109283d05b63e, type: 3}
   m_PrefabInstance: {fileID: 1357180255}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1360051315
@@ -1393,7 +1451,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1360051316}
+  - {fileID: 573860913}
   - {fileID: 915636165}
   - {fileID: 558933846}
   - {fileID: 2066342061}
-  - {fileID: 573860913}
