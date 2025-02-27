@@ -27,16 +27,13 @@ public class MorphController : MonoBehaviour
 		_originalShader = _start.GetComponentInChildren<Renderer>().sharedMaterial.shader;
 	}
 
-	private void Awake()
-	{
-		_materials = new();
-	}
+	private void Awake() => _materials = new();
 
 	private void OnDisable() => RestoreOriginalShader();
 
 	public bool TryMorph(UnityAction onComplete)
 	{
-		if (_animation == null || !_animation.IsPlaying())
+		if (_animation == null || !_animation.active)
 		{
 			Morph(onComplete);
 			return true;
@@ -46,7 +43,7 @@ public class MorphController : MonoBehaviour
 
 	private void Morph(UnityAction onComplete)
 	{
-		GetDissolveAndAppear(out var appearGO, out var dissolveGO);
+		GetDissolveAndAppear(out var dissolveGO, out var appearGO);
 		var dissolveMaterials = GetUniqueMaterials(dissolveGO);
 		var appearMaterials = GetUniqueMaterials(appearGO);
 		float delay = _vfx.GetFloat(LIFETIME_PROPERTY);
@@ -54,30 +51,42 @@ public class MorphController : MonoBehaviour
 		_materials.UnionWith(dissolveMaterials.Union(appearMaterials));
 		SetShader(dissolveMaterials, DissolveShader);
 		SetShader(appearMaterials, DissolveShader);
-		SetProgressProperty(dissolveMaterials, fullProgress);
-		SetProgressProperty(appearMaterials, 0f);
-		dissolveGO.SetActive(true);
-		_animation = DOTween.Sequence(this);
-		Dissolve(_animation);
-		//_animation.AppendInterval(delay);
-		Appear(_animation, fullProgress);
-		_animation.OnComplete(OnComplete);
+		SetProgressProperty(dissolveMaterials, 0f);
+		SetProgressProperty(appearMaterials, fullProgress);
+		appearGO.SetActive(true);
+		PlayAnimation();
 
-		void Dissolve(Sequence sequence)
+		void PlayAnimation()
 		{
-			foreach (var mat in dissolveMaterials)
-				sequence.Join(TweenProgress(mat, 0f));
-		}
+			_animation = DOTween.Sequence(this);
+			Dissolve(_animation, fullProgress);
+			Appear(_animation, delay);
+			_animation.OnComplete(OnComplete);
 
-		void Appear(Sequence sequence, float fullProgress)
-		{
-			foreach (var mat in appearMaterials)
-				sequence.Join(TweenProgress(mat, fullProgress));
-		}
+			void Dissolve(Sequence sequence, float fullProgress)
+			{
+				foreach (var mat in dissolveMaterials)
+					sequence.Join(TweenProgress(mat, fullProgress));
+			}
 
-		FloatTweener TweenProgress(Material material, float endValue)
-		{
-			return material.DOFloat(endValue, PROGRESS_PROPERTY, _animationDuration).SetEase(Ease.InOutSine);
+			void Appear(Sequence sequence, float delay)
+			{
+				sequence.Insert(delay, TweenProgress(appearMaterials.First(), 0f));
+				foreach (var mat in appearMaterials.Skip(1))
+					sequence.Join(TweenProgress(mat, 0f));
+			}
+
+			FloatTweener TweenProgress(Material material, float endValue)
+			{
+				return material.DOFloat(endValue, PROGRESS_PROPERTY, _animationDuration).SetEase(Ease.InOutSine);
+			}
+
+			void OnComplete()
+			{
+				dissolveGO.SetActive(false);
+				RestoreOriginalShader();
+				onComplete?.Invoke();
+			}
 		}
 
 		void SetProgressProperty(IEnumerable<Material> materials, float value)
@@ -95,13 +104,6 @@ public class MorphController : MonoBehaviour
 		}
 
 		IEnumerable<Material> GetUniqueMaterials(GameObject go) => go.GetComponentsInChildren<Renderer>().Select(r => r.sharedMaterial).Distinct();
-
-		void OnComplete()
-		{
-			appearGO.SetActive(false);
-			RestoreOriginalShader();
-			onComplete?.Invoke();
-		}
 	}
 
 	private void SetShader(IEnumerable<Material> materials, Shader shader)
