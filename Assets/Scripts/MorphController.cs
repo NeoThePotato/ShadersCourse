@@ -8,7 +8,11 @@ using FloatTweener = DG.Tweening.Core.TweenerCore<float, float, DG.Tweening.Plug
 
 public class MorphController : MonoBehaviour
 {
-	private const string PROGRESS_PROPERTY = "_Progress", SIZE_PROPERTY = "_Size", LIFETIME_PROPERTY = "Lifetime";
+	private const string	PROGRESS_PROPERTY = "_Progress",
+							SIZE_PROPERTY = "_Size",
+							LIFETIME_PROPERTY = "Lifetime",
+							PLAY_EVENT = "OnPlay",
+							STOP_EVENT = "OnStop";
 
 	[SerializeField] private GameObject _start, _end;
 	[SerializeField] private VisualEffect _vfx;
@@ -54,6 +58,8 @@ public class MorphController : MonoBehaviour
 		SetProgressProperty(dissolveMaterials, 0f);
 		SetProgressProperty(appearMaterials, fullProgress);
 		appearGO.SetActive(true);
+		_vfx.gameObject.SetActive(true);
+		_vfx.SendEvent(PLAY_EVENT);
 		PlayAnimation();
 
 		void PlayAnimation()
@@ -61,6 +67,7 @@ public class MorphController : MonoBehaviour
 			_animation = DOTween.Sequence(this);
 			Dissolve(_animation, fullProgress);
 			Appear(_animation, delay);
+			_animation.JoinCallback(() => _vfx.SendEvent(STOP_EVENT));
 			_animation.OnComplete(OnComplete);
 
 			void Dissolve(Sequence sequence, float fullProgress)
@@ -84,6 +91,7 @@ public class MorphController : MonoBehaviour
 			void OnComplete()
 			{
 				dissolveGO.SetActive(false);
+				_vfx.gameObject.SetActive(false);
 				RestoreOriginalShader();
 				onComplete?.Invoke();
 			}
