@@ -70,7 +70,10 @@ public class MorphController : MonoBehaviour
 			Dissolve(_animation, fullProgress);
 			Appear(_animation, delay);
 			foreach (var vfx in VFXes)
+			{
+				_animation.Insert(0f, DOTween.To(setter: f => vfx.SetFloat("Rate By Vertex Count", f), endValue: 0f, duration: _animationDuration, startValue: _vfxPrefab.GetFloat("Rate By Vertex Count")).SetEase(Ease.Linear));
 				_animation.InsertCallback(_animationDuration, () => OnVFXFinish(vfx));
+			}
 			_animation.OnComplete(OnComplete);
 
 			void Dissolve(Sequence sequence, float fullProgress)
