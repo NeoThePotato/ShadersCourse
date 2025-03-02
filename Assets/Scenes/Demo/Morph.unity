@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!137 &3748827 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 351994630876404725, guid: d5f3767fec037ae449081225915022e1, type: 3}
+  m_PrefabInstance: {fileID: 1011191458}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &57185262
 GameObject:
   m_ObjectHideFlags: 0
@@ -230,7 +235,13 @@ VisualEffect:
     m_Gradient:
       m_Array: []
     m_NamedObject:
-      m_Array: []
+      m_Array:
+      - m_Value: {fileID: 3748827}
+        m_Name: Start
+        m_Overridden: 1
+      - m_Value: {fileID: 1865340709}
+        m_Name: End
+        m_Overridden: 1
     m_Bool:
       m_Array: []
 --- !u!1 &142717183
@@ -1234,6 +1245,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1863765907}
   m_CullTransparentMesh: 1
+--- !u!137 &1865340709 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4438208400423187210, guid: bba52cb8327573a4299109283d05b63e, type: 3}
+  m_PrefabInstance: {fileID: 1357180255}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2065553996
 GameObject:
   m_ObjectHideFlags: 3
