@@ -11,11 +11,13 @@ public class MorphController : MonoBehaviour
 	private const string	PROGRESS_PROPERTY = "_Progress",
 							SIZE_PROPERTY = "_Size",
 							LIFETIME_PROPERTY = "Lifetime",
+							START_PROPERTY = "Start",
+							END_PROPERTY = "End",
 							PLAY_EVENT = "OnPlay",
 							STOP_EVENT = "OnStop";
 
 	[SerializeField] private GameObject _start, _end;
-	[SerializeField] private VisualEffect _vfx;
+	[SerializeField] private VisualEffect _vfxPrefab;
 	[SerializeField] private Material _dissolveMaterial;
 	[SerializeField] private Shader _originalShader;
 	[SerializeField] private float _animationDuration = 2f;
@@ -27,7 +29,6 @@ public class MorphController : MonoBehaviour
 	private void OnValidate()
 	{
 		_end.SetActive(false);
-		_vfx.gameObject.SetActive(false);
 		_originalShader = _start.GetComponentInChildren<Renderer>().sharedMaterial.shader;
 	}
 
@@ -50,7 +51,7 @@ public class MorphController : MonoBehaviour
 		GetDissolveAndAppear(out var dissolveGO, out var appearGO);
 		var dissolveMaterials = GetUniqueMaterials(dissolveGO);
 		var appearMaterials = GetUniqueMaterials(appearGO);
-		float delay = _vfx.GetFloat(LIFETIME_PROPERTY);
+		float delay = _vfxPrefab.GetFloat(LIFETIME_PROPERTY);
 		float fullProgress = _dissolveMaterial.GetFloat(SIZE_PROPERTY) + 1f;
 		_materials.UnionWith(dissolveMaterials.Union(appearMaterials));
 		SetShader(dissolveMaterials, DissolveShader);
@@ -58,8 +59,9 @@ public class MorphController : MonoBehaviour
 		SetProgressProperty(dissolveMaterials, 0f);
 		SetProgressProperty(appearMaterials, fullProgress);
 		appearGO.SetActive(true);
-		_vfx.gameObject.SetActive(true);
-		_vfx.SendEvent(PLAY_EVENT);
+		var VFXes = SpawnVFXes().ToArray();
+		foreach (var vfx in VFXes)
+			vfx.SendEvent(PLAY_EVENT);
 		PlayAnimation();
 
 		void PlayAnimation()
@@ -67,7 +69,8 @@ public class MorphController : MonoBehaviour
 			_animation = DOTween.Sequence(this);
 			Dissolve(_animation, fullProgress);
 			Appear(_animation, delay);
-			_animation.InsertCallback(_animationDuration, () => _vfx.SendEvent(STOP_EVENT));
+			foreach (var vfx in VFXes)
+				_animation.InsertCallback(_animationDuration, () => OnVFXFinish(vfx));
 			_animation.OnComplete(OnComplete);
 
 			void Dissolve(Sequence sequence, float fullProgress)
@@ -91,9 +94,15 @@ public class MorphController : MonoBehaviour
 			void OnComplete()
 			{
 				dissolveGO.SetActive(false);
-				_vfx.gameObject.SetActive(false);
 				RestoreOriginalShader();
 				onComplete?.Invoke();
+				foreach (var vfx in VFXes)
+					vfx.gameObject.SetActive(false);
+			}
+
+			void OnVFXFinish(VisualEffect vfx)
+			{
+				vfx.SendEvent(STOP_EVENT);
 			}
 		}
 
@@ -101,6 +110,29 @@ public class MorphController : MonoBehaviour
 		{
 			foreach (var material in materials)
 				material.SetFloat(PROGRESS_PROPERTY, value);
+		}
+
+		IEnumerable<VisualEffect> SpawnVFXes()
+		{
+			foreach ((var start, var end) in dissolveGO.GetComponentsInChildren<SkinnedMeshRenderer>().Zip(appearGO.GetComponentsInChildren<SkinnedMeshRenderer>(), (s, e) => (s, e)))
+				yield return SpawnVFX(start, end);
+
+			VisualEffect SpawnVFX(SkinnedMeshRenderer start, SkinnedMeshRenderer end)
+			{
+				var vfx = GetOrCreateVFX();
+				vfx.SetSkinnedMeshRenderer(START_PROPERTY, start);
+				vfx.SetSkinnedMeshRenderer(END_PROPERTY, end);
+				return vfx;
+			}
+
+			VisualEffect GetOrCreateVFX()
+			{
+				var vfx = GetComponentsInChildren<VisualEffect>(includeInactive: true).FirstOrDefault(vfx => !vfx.gameObject.activeSelf);
+				if (vfx == null)
+					vfx = Instantiate(_vfxPrefab, transform);
+				vfx.gameObject.SetActive(true);
+				return vfx;
+			}
 		}
 
 		void GetDissolveAndAppear(out GameObject dissolve, out GameObject appear)
