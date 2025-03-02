@@ -67,7 +67,7 @@ public class MorphController : MonoBehaviour
 			_animation = DOTween.Sequence(this);
 			Dissolve(_animation, fullProgress);
 			Appear(_animation, delay);
-			_animation.JoinCallback(() => _vfx.SendEvent(STOP_EVENT));
+			_animation.InsertCallback(_animationDuration, () => _vfx.SendEvent(STOP_EVENT));
 			_animation.OnComplete(OnComplete);
 
 			void Dissolve(Sequence sequence, float fullProgress)
